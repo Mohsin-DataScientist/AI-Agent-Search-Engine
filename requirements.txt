@@ -13,9 +13,9 @@ langchain-groq==0.3.2
 # Search tool
 duckduckgo-search>=6.3.0
 
-gTTS>=2.5.4
 ddgs
 # Utilities
 tqdm>=4.66.5
+
 
 
