@@ -8,7 +8,7 @@ from langchain.tools import DuckDuckGoSearchRun
 from dotenv import load_dotenv
 import warnings
 
-# Extra imports for new features
+# Extra imports for new features (Voice output only)
 from gtts import gTTS
 from io import BytesIO
 
@@ -61,8 +61,7 @@ with st.sidebar:
     st.subheader("How it Works")
     st.write("""
     1. Enter your question in the input field  
-    2. Or use voice input 🎤  
-    3. The AI agent will:  
+    2. The AI agent will:  
        - Search the web  
        - Scrape website content  
        - Generate a comprehensive answer  
@@ -139,18 +138,8 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 
-# ---------------------- VOICE INPUT ----------------------
+# ---------------------- USER INPUT ----------------------
 user_question = st.chat_input("What would you like to know?")
-if st.button("🎤 Speak Your Question"):
-    recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        st.write("Listening...")
-        audio = recognizer.listen(source)
-        try:
-            user_question = recognizer.recognize_google(audio)
-            st.success(f"You said: {user_question}")
-        except:
-            st.error("Sorry, I could not understand your voice input.")
 
 
 # ---------------------- RUN AGENT ----------------------
@@ -210,4 +199,3 @@ st.text_input("Session Title", st.session_state.session_title, key="session_titl
 for h in st.session_state.history:
     st.write(f"**You:** {h['q']}")
     st.write(f"**Agent:** {h['a']}")
-
