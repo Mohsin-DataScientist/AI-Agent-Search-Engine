@@ -1,0 +1,17 @@
+# Core
+streamlit
+python-dotenv
+requests
+beautifulsoup4
+
+# LangChain core
+langchain
+langchain-community
+
+# LLM Providers
+langchain-groq
+langchain-google-genai
+langchain-anthropic
+
+# Search
+duckduckgo-search
