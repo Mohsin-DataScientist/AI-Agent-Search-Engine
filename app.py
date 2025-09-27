@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 import warnings
 
 # Extra imports for new features
-import speech_recognition as sr
 from gtts import gTTS
 from io import BytesIO
 
@@ -211,3 +210,4 @@ st.text_input("Session Title", st.session_state.session_title, key="session_titl
 for h in st.session_state.history:
     st.write(f"**You:** {h['q']}")
     st.write(f"**Agent:** {h['a']}")
+
