@@ -13,10 +13,8 @@ langchain-groq==0.3.2
 # Search tool
 duckduckgo-search>=6.3.0
 
-# Speech recognition & TTS
-SpeechRecognition>=3.10.0
-pyaudio>=0.2.14
 gTTS>=2.5.4
 
 # Utilities
 tqdm>=4.66.5
+
