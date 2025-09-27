@@ -8,12 +8,7 @@ from langchain.tools import DuckDuckGoSearchRun
 from dotenv import load_dotenv
 import warnings
 
-# Extra imports for new features (Voice output only)
-from gtts import gTTS
-from io import BytesIO
-
 warnings.filterwarnings("ignore")
-
 load_dotenv()
 
 # ---------------------- SCRAPER TOOL ----------------------
@@ -24,7 +19,11 @@ class EnchancedWebScrapperTool:
 
     def run(self, url: str) -> str:
         try:
-            headers = {"User-Agent": "Mozilla/5.9 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Like Gecko) Chrome/91.0.4472.124 safari/537.36"}
+            headers = {
+                "User-Agent": "Mozilla/5.9 (Windows NT 10.0; Win64; x64) "
+                              "AppleWebKit/537.36 (KHTML, Like Gecko) "
+                              "Chrome/91.0.4472.124 Safari/537.36"
+            }
             response = requests.get(url, headers=headers, timeout=10)
             response.raise_for_status()
 
@@ -71,7 +70,11 @@ with st.sidebar:
 
     model_choice = st.selectbox(
         "Choose Language Model",
-        options=["moonshotai/kimi-k2-instruct-0905", "llama-3.1-8b-instant", "openai/gpt-oss-120b"],
+        options=[
+            "moonshotai/kimi-k2-instruct-0905",
+            "llama-3.1-8b-instant",
+            "openai/gpt-oss-120b"
+        ],
         index=0
     )
 
@@ -107,8 +110,16 @@ def initialize_web_agent(model_name, temp, max_iter):
     web_scrapper_tool = EnchancedWebScrapperTool()
 
     tools = [
-        Tool(name="Search", func=search_tool.run, description="Useful for searching the web. Input should be a search query."),
-        Tool(name="Webscraper", func=web_scrapper_tool.run, description="Scrapes content from a specific website. Input should be a URL.")
+        Tool(
+            name="Search",
+            func=search_tool.run,
+            description="Useful for searching the web. Input should be a search query."
+        ),
+        Tool(
+            name="Webscraper",
+            func=web_scrapper_tool.run,
+            description="Scrapes content from a specific website. Input should be a URL."
+        )
     ]
 
     agent = initialize_agent(
@@ -177,13 +188,6 @@ if user_question and agent:
                 # Save to history
                 st.session_state.messages.append({"role": "assistant", "content": response})
                 st.session_state.history.append({"q": user_question, "a": response})
-
-                # 🔊 Voice Output
-                if st.button("🔊 Read Aloud"):
-                    tts = gTTS(text=response, lang="en")
-                    audio_fp = BytesIO()
-                    tts.write_to_fp(audio_fp)
-                    st.audio(audio_fp.getvalue(), format="audio/mp3")
 
             except Exception as e:
                 status.update(label="Error", state="error")
